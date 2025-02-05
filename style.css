@@ -18,7 +18,7 @@ body {
 
 #container{
     flex: 1 1 0;
-    background-color: #6c7475;
+    background-color: #434747;
     padding: 60px 40px;
     border-radius: 20px;
     display: flex;
@@ -29,10 +29,26 @@ body {
 }
 
 #display{
-    background-color: #4c8c50;
+    background-color: #589c5c;
     width: 100%;
     flex: 3 1 0;
     border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    font-size: 60px;
+    font-weight: 900;
+    padding: 10px; /* Adds some spacing */
+}
+
+#display p {
+    word-break: break-word; /* Ensures the text inside breaks */
+    overflow-wrap: break-word;
+    white-space: normal;
+    text-align: right; /* Align text to the right */
+    width: 100%; /* Makes sure the text container spans full width */
+    margin: 0;
+    padding: 0;
 }
 
 .rows{
@@ -46,8 +62,21 @@ body {
 }
 
 .row{
-    background-color: grey;
     flex: 1 1 0;
     border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 10px 24px;
+}
+
+button {
+    flex: 1 1 0;
+    height: 100%;
+    font-size: 24px;
+    font-weight: 700;
+    background-color: rgb(143, 141, 141);
+    color: whitesmoke;
 }
 
