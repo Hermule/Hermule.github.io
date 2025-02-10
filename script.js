@@ -1,6 +1,7 @@
 const PUNKTRECHNUNG = 'X/';
 const STRICHRECHNUNG = '+-';
 const KEINMINUS = 'X/+';
+const RECHENOPERATIONEN = 'X/+-';
 
 function add(number1, number2){
     return number1 + number2;
@@ -43,18 +44,24 @@ function getDisplayValue(){
 }
 
 function operate(operand, _number1, _number2){
-    let number1 = parseInt(_number1.replace("!", "-"));
-    let number2 = parseInt(_number2.replace("!", "-"));
+    let number1 = parseFloat(_number1.replace("!", "-"));
+    let number2 = parseFloat(_number2.replace("!", "-"));
+    let value;
     switch(operand){
         case "+":
-            return add(number1, number2);
+            value = add(number1, number2);
+            break;
         case "-":
-            return subsctract(number1, number2);
+            value = subsctract(number1, number2);
+            break;
         case "X":
-            return mulitply(number1, number2);
+            value = mulitply(number1, number2);
+            break;
         case "/":
-            return divide(number1, number2);
+            value = divide(number1, number2);
+            break;
     }
+    return Math.round(value*100000)/100000;
 }
 
 function evaluate(string){
@@ -108,3 +115,26 @@ equal.addEventListener("click", (e) => {
     const display = getDisplayValue();
     evaluate(display.textContent);
 })
+
+const pow = document.getElementById("pow");
+pow.addEventListener("click", (e) => {
+    const display = getDisplayValue();
+    const lastNumber = getLastNumber(display.textContent);
+    display.textContent = display.textContent.slice(0,-lastNumber.length) + parseFloat(lastNumber)*1000;
+});
+
+function getLastNumber(string){
+    let lastIndex = -2;
+    for (char of RECHENOPERATIONEN){
+        let index = string.lastIndexOf(char);
+        if (index > lastIndex){
+            lastIndex = index;
+        }
+    }
+    if (lastIndex == -1){
+        return string;
+    }
+    else {
+        return string.slice(lastIndex + 1)
+    }
+}
