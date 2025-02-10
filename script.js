@@ -59,6 +59,10 @@ function operate(operand, _number1, _number2){
             break;
         case "/":
             value = divide(number1, number2);
+            if (value == "Infinity") {
+                value = "Math ERROR";
+                return value;
+            }
             break;
     }
     return Math.round(value*100000)/100000;
@@ -90,7 +94,7 @@ function evaluate(string){
             return;
         }
     }
-    console.log(split);
+
     for (let i = 0; i < split.length; i++){
         if (STRICHRECHNUNG.includes(split[i])){
             let calculation = operate(split[i], split[i-1], split[i+1]);
@@ -138,3 +142,23 @@ function getLastNumber(string){
         return string.slice(lastIndex + 1)
     }
 }
+
+document.addEventListener("keydown", (e) =>{
+    const NUMBERS = /^[0-9]$/g;
+    const OPERANDS = '*+/-';
+    const display = getDisplayValue();
+    if (NUMBERS.test(e.key) || OPERANDS.includes(e.key) || e.key == ".") {
+        display.textContent += e.key;
+        return;
+    }
+
+    if (e.key == "Backspace"){
+        display.textContent = display.textContent.slice(0,-1);
+        return;
+    }
+
+    if(e.key == "=") {
+        evaluate(display.textContent);
+        return;
+    }
+});
