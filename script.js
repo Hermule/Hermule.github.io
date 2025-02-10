@@ -23,6 +23,9 @@ const numbers = document.querySelectorAll(".operand");
 for (let i = 0; i < numbers.length; i++){
     numbers[i].addEventListener("click", (e) => {
         const display = getDisplayValue();
+        if (e.target.textContent == "." && isFloat(getLastNumber(display.textContent)) == true){
+            return;
+        }
         display.textContent += e.target.textContent;
     });
 }
@@ -147,7 +150,7 @@ document.addEventListener("keydown", (e) =>{
     const NUMBERS = /^[0-9]$/g;
     const OPERANDS = '*+/-';
     const display = getDisplayValue();
-    if (NUMBERS.test(e.key) || OPERANDS.includes(e.key) || e.key == ".") {
+    if (NUMBERS.test(e.key) || OPERANDS.includes(e.key)) {
         display.textContent += e.key;
         return;
     }
@@ -161,4 +164,17 @@ document.addEventListener("keydown", (e) =>{
         evaluate(display.textContent);
         return;
     }
+
+    if (e.key ==".") {
+        if (isFloat(getLastNumber(display.textContent)) == true){
+            return;
+        }
+        display.textContent += e.key;
+        return;
+    }
 });
+
+function isFloat(n){
+    let value = parseFloat(n) % 1 !== 0;
+    return value; 
+}
